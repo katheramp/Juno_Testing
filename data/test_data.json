@@ -1,0 +1,18 @@
+[
+    {
+        "url": "https://juno.vn/",
+        "testCase": "tc22",
+        "testName": "Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
+        "productName": "Túi Xách Nhỏ Mini Đính Hạt Ma Cherie",
+        "amountToEnter": "2",
+        "expectedPrice": "5,748,000 đ"
+    },
+    {
+        "url": "https://juno.vn/",
+        "testCase": "tc23",
+        "testName": "Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
+        "productName": "Túi Xách Nhỏ Mini Đính Hạt Ma Cherie",
+        "amountToEnter": "3",
+        "expectedNotification": "Cập nhật số lượng sản phẩm thất bại"
+    }
+]
