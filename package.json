@@ -1,0 +1,23 @@
+{
+  "name": "juno_testing",
+  "version": "1.0.0",
+  "description": "Automation testing for Juno cart scenarios with Mocha, Selenium and Mochawesome",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "mocha \"tests/automation.test.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
+    "test:cart": "mocha \"tests/automation.test.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
+    "test:cart:all": "mocha \"tests/automation.test.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
+    "test:tc25": "mocha \"tests/automation.test.js\" --grep \"TC25\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "selenium-webdriver": "^4.43.0"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "mocha": "^11.7.5",
+    "mochawesome": "^7.1.4"
+  }
+}

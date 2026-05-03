@@ -1,0 +1,13 @@
+TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng
+1. Truy cập trang chủ
+2. Ấn xem giỏ hàng
+3. Chọn một sản phẩm có sẵn trong giỏ hàng với số lượng là 1
+4. Thay đổi số lượng từ 1 → 2
+Expected Result: Số lượng được cập nhật thành công, tổng tiền thay đổi.
+
+TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng
+1. Truy cập trang chủ
+2. Ấn xem giỏ hàng
+3. Chọn một sản phẩm có sẵn trong giỏ hàng
+4. Nhập số lượng = 0
+Expected Result: Sản phẩm được cập nhật số lượng bị loại bỏ hoàn toàn khỏi danh sách hiển thị trong giỏ hàng.

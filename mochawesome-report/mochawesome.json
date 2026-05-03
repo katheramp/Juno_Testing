@@ -1,0 +1,159 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-05-03T16:43:26.605Z",
+    "end": "2026-05-03T16:44:37.746Z",
+    "duration": 71141,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "28a91eda-196b-4841-ba1b-93e7dd8f41aa",
+      "title": "",
+      "fullFile": "D:\\Projects\\SoftwareTesting\\Juno_Testing\\tests\\automation.test.js",
+      "file": "\\tests\\automation.test.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "0c4a58ac-cc64-43dc-b9cc-3c4eefc8df0e",
+          "title": "Automation giỏ hàng Juno",
+          "fullFile": "D:\\Projects\\SoftwareTesting\\Juno_Testing\\tests\\automation.test.js",
+          "file": "\\tests\\automation.test.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Automation giỏ hàng Juno\"",
+              "fullTitle": "Automation giỏ hàng Juno \"before all\" hook in \"Automation giỏ hàng Juno\"",
+              "timedOut": false,
+              "duration": 671,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "driver = await createChromeDriver();",
+              "err": {},
+              "uuid": "25fc56f7-f98f-4e6a-b49d-4d2ab29aa302",
+              "parentUUID": "0c4a58ac-cc64-43dc-b9cc-3c4eefc8df0e",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"Automation giỏ hàng Juno\"",
+              "fullTitle": "Automation giỏ hàng Juno \"after all\" hook in \"Automation giỏ hàng Juno\"",
+              "timedOut": false,
+              "duration": 67,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "if (driver) {\n  await driver.quit();\n}",
+              "err": {},
+              "uuid": "c72730e0-7ddd-41f2-916f-9aa6659def26",
+              "parentUUID": "0c4a58ac-cc64-43dc-b9cc-3c4eefc8df0e",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "TC24 - Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng",
+              "fullTitle": "Automation giỏ hàng Juno TC24 - Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng",
+              "timedOut": false,
+              "duration": 37563,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  \"Requirement: FR11\",\n  \"Expected: Số lượng được cập nhật thành công, tổng tiền thay đổi.\",\n  \"Product URL: https://sales.juno.vn/products/giay-sandal-quai-manh-that-nut\",\n  \"New quantity: 2\",\n  \"Tester: Đào Huỳnh Gia Hân - 81012302863\",\n  \"Start time: 23:43:27 03/05/2026\",\n  \"Evidence: Ảnh số lượng sản phẩm khi chưa cập nhật.\",\n  \"screenshots/TC24_screenshot01.png\",\n  \"Evidence: Ảnh số lượng sản phẩm sau khi cập nhật.\",\n  \"screenshots/TC24_screenshot02.png\",\n  \"End time: 23:44:04 03/05/2026\"\n]",
+              "code": "addCommonMeta(this, tc24Data);\naddTestMeta(this, `Start time: ${formatReportTime(new Date())}`);\ntry {\n  await clearCart(driver);\n  await addProductToCart(driver, tc24Data.productUrl || tc24Data.url, LOCATORS);\n  await waitForCartStable(driver, LOCATORS);\n  addTestMeta(this, 'Evidence: Ảnh số lượng sản phẩm khi chưa cập nhật.');\n  await captureEvidence(driver, this, {\n    fileName: 'TC24_screenshot01.png',\n    highlightXpaths: [LOCATORS.incrementButtons[0], LOCATORS.totalPrice[0]]\n  });\n  const quantityInputBefore = await driver.findElement(By.xpath(LOCATORS.quantityInputs[0]));\n  const quantityBefore = Number(await quantityInputBefore.getAttribute('value')) || 1;\n  const oldTotalText = await tryReadText(driver, LOCATORS.totalPrice);\n  const oldTotal = parseCurrency(oldTotalText);\n  const oldSummary = await getCartSummarySnapshot(driver);\n  const updatedInput = await updateQuantity(driver, LOCATORS, tc24Data.newQuantity);\n  const quantityAfter = updatedInput ? Number(await updatedInput.getAttribute('value')) || 0 : 0;\n  await driver.sleep(1800);\n  const newTotalText = await tryReadText(driver, LOCATORS.totalPrice);\n  const newTotal = parseCurrency(newTotalText);\n  const newSummary = await getCartSummarySnapshot(driver);\n  validateTC24({\n    beforeQuantity: quantityBefore,\n    afterQuantity: quantityAfter,\n    oldTotal,\n    newTotal,\n    oldSummaryText: oldSummary.summaryText,\n    newSummaryText: newSummary.summaryText\n  });\n} catch (error) {\n  throw error;\n} finally {\n  addTestMeta(this, 'Evidence: Ảnh số lượng sản phẩm sau khi cập nhật.');\n  await captureEvidence(driver, this, {\n    fileName: 'TC24_screenshot02.png',\n    highlightXpaths: [LOCATORS.quantityInputs[0], LOCATORS.totalPrice[0]]\n  });\n  addTestMeta(this, `End time: ${formatReportTime(new Date())}`);\n}",
+              "err": {},
+              "uuid": "51578abb-a71f-40b2-bb73-3c8c0b26a458",
+              "parentUUID": "0c4a58ac-cc64-43dc-b9cc-3c4eefc8df0e",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "TC25 - Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng",
+              "fullTitle": "Automation giỏ hàng Juno TC25 - Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng",
+              "timedOut": false,
+              "duration": 32836,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  \"Requirement: FR11\",\n  \"Expected: Sản phẩm được cập nhật số lượng bị loại bỏ hoàn toàn khỏi danh sách hiển thị trong giỏ hàng.\",\n  \"Product URL: https://sales.juno.vn/products/giay-sandal-quai-manh-that-nut\",\n  \"New quantity: 0\",\n  \"Tester: Đào Huỳnh Gia Hân - 81012302863\",\n  \"Start time: 23:44:04 03/05/2026\",\n  \"Evidence: Ảnh số lượng sản phẩm khi chưa cập nhật.\",\n  \"screenshots/TC25_screenshot01.png\",\n  \"Evidence: Ảnh giỏ hàng trống sau khi cập nhật.\",\n  \"screenshots/TC25_screenshot02.png\",\n  \"End time: 23:44:37 03/05/2026\"\n]",
+              "code": "addCommonMeta(this, tc25Data);\naddTestMeta(this, `Start time: ${formatReportTime(new Date())}`);\ntry {\n  await clearCart(driver);\n  await addProductToCart(driver, tc25Data.productUrl || tc25Data.url, LOCATORS);\n  await waitForCartStable(driver, LOCATORS);\n  addTestMeta(this, 'Evidence: Ảnh số lượng sản phẩm khi chưa cập nhật.');\n  await captureEvidence(driver, this, {\n    fileName: 'TC25_screenshot01.png',\n    highlightXpaths: [LOCATORS.decrementButtons[0], LOCATORS.totalPrice[0]]\n  });\n  await updateQuantity(driver, LOCATORS, tc25Data.newQuantity);\n  await driver.sleep(2000);\n  const itemCountAfterUpdate = await getDisplayedCount(driver, LOCATORS.cartItems);\n  const quantityInputsAfterUpdate = await getDisplayedCount(driver, LOCATORS.quantityInputs);\n  const emptyMessage = await tryReadText(driver, LOCATORS.cartEmptyMessage);\n  validateTC25({\n    itemCountAfterUpdate,\n    quantityInputsAfterUpdate,\n    emptyMessage\n  });\n} catch (error) {\n  throw error;\n} finally {\n  addTestMeta(this, 'Evidence: Ảnh giỏ hàng trống sau khi cập nhật.');\n  await captureEvidence(driver, this, {\n    fileName: 'TC25_screenshot02.png'\n  });\n  addTestMeta(this, `End time: ${formatReportTime(new Date())}`);\n}",
+              "err": {},
+              "uuid": "0cd12b8a-03af-4de4-aba3-8c3f9696ecc1",
+              "parentUUID": "0c4a58ac-cc64-43dc-b9cc-3c4eefc8df0e",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "51578abb-a71f-40b2-bb73-3c8c0b26a458",
+            "0cd12b8a-03af-4de4-aba3-8c3f9696ecc1"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 70399,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 180000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 0
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "11.7.5"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "charts": "true"
+      },
+      "version": "6.3.2"
+    }
+  }
+}
