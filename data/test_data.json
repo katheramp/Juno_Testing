@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://juno.vn/",
+    "collectionUrl": "https://juno.vn/collections/giay",
+    "testCase": "tc16",
+    "testName": "Lọc sản phẩm theo thuộc tính (Loại sản phẩm/Màu sắc)",
+    "categoryName": "Giày",
+    "productType": "Giày cao gót",
+    "color": "Đỏ",
+    "sampleSize": 3
+  },
+  {
+    "url": "https://juno.vn/",
+    "productUrl": "https://juno.vn/products/tui-xach-nho-mini-dinh-hat-ma-cherie-4zLD",
+    "testCase": "tc37",
+    "testName": "Kiểm tra hiển thị cảnh báo lỗi khi nhập Số điện thoại chứa ký tự chữ cái",
+    "phoneInvalid": "abc1234567",
+    "expectedValidation": "Vui lòng nhập số điện thoại hợp lệ"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "name": "juno_testing_kimngan",
+  "version": "1.0.0",
+  "description": "Automation test cases for Juno website - Tran Nguyen Kim Ngan (KimNgan) - MSSV 81012302877.",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha \"tests/**/*.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true"
+  },
+  "keywords": [],
+  "author": "Tran Nguyen Kim Ngan (KimNgan) - MSSV 81012302877",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "selenium-webdriver": "^4.43.0"
+  },
+  "devDependencies": {
+    "chai": "^6.2.2",
+    "mocha": "^11.7.5",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2"
+  }
+}
