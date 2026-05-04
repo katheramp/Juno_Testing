@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "test": "mocha \"tests/automation.test.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
-    "test:cart": "mocha \"tests/automation.test.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
-    "test:cart:all": "mocha \"tests/automation.test.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
-    "test:tc25": "mocha \"tests/automation.test.js\" --grep \"TC25\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true"
+    "test": "mocha \"tests/tc*.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
+    "test:cart": "mocha \"tests/tc*.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
+    "test:tc24": "mocha \"tests/tc24.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true",
+    "test:tc25": "mocha \"tests/tc25.js\" --no-timeouts --reporter mochawesome --require mochawesome/register --reporter-options charts=true"
   },
   "author": "",
   "license": "ISC",

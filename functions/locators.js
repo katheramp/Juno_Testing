@@ -21,8 +21,8 @@ const LOCATORS = {
   ],
   viewCartButtons: [
     "//a[contains(@class,'linktocheckout') and contains(@href,'/cart')]",
-    "//a[contains(translate(normalize-space(.), 'abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 'XEM GIỎ HÀNG')]",
-    "//button[normalize-space()='XEM GIỎ HÀNG']"
+    "//a[contains(@href,'/cart') and (contains(@class,'btn') or contains(@class,'button') or contains(@class,'link'))]",
+    "//button[contains(normalize-space(.),'XEM GIỎ HÀNG')]"
   ],
   cartNavigationLinks: [
     "//a[contains(@class,'count-holder') and contains(@href,'/cart')]",
@@ -51,7 +51,8 @@ const LOCATORS = {
   ],
   confirmDeleteButtons: [
     "//*[self::button or self::a or self::span][normalize-space()='Có']",
-    "//*[self::button or self::a][contains(@class,'btn') and normalize-space()='Có']"
+    "//*[self::button or self::a][contains(@class,'btn') and normalize-space()='Có']",
+    "//*[@role='dialog']//*[self::button or self::a][normalize-space()='Yes' or normalize-space()='OK']"
   ],
   updateButtons: [
     "(//button[normalize-space()='Cập nhật'])[1]",

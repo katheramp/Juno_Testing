@@ -5,6 +5,16 @@ const { Builder, By, Key } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const addContext = require('mochawesome/addContext');
 
+// Giới hạn thời gian chờ cho các thao tác dễ bị treo.
+function withTimeout(promise, timeoutMs, message) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error(message || `Timeout sau ${timeoutMs}ms`)), timeoutMs);
+    })
+  ]);
+}
+
 function formatReportTime(date = new Date()) {
   return new Intl.DateTimeFormat('vi-VN', {
     timeZone: 'Asia/Ho_Chi_Minh',
@@ -78,28 +88,49 @@ function resolveChromeDriverPath() {
   throw new Error('Không tìm thấy chromedriver.exe hợp lệ.');
 }
 
-function createChromeDriver() {
+async function createChromeDriver() {
+  const userDataDir = fs.mkdtempSync(path.join(os.tmpdir(), 'juno-chrome-'));
   const options = new chrome.Options()
     .setChromeBinaryPath(resolveChromeBinaryPath())
     .addArguments(
       '--disable-gpu',
+      '--disable-background-networking',
       '--disable-dev-shm-usage',
       '--disable-extensions',
       '--no-first-run',
       '--no-default-browser-check',
       '--no-sandbox',
+      '--remote-debugging-port=0',
       '--window-size=1400,1200'
-    );
+    )
+    .addArguments(`--user-data-dir=${userDataDir}`);
 
   if (String(process.env.HEADLESS || 'true').toLowerCase() !== 'false') {
     options.addArguments('--headless=new');
   }
 
-  return new Builder()
-    .forBrowser('chrome')
-    .setChromeOptions(options)
-    .setChromeService(new chrome.ServiceBuilder(resolveChromeDriverPath()))
-    .build();
+  let driver;
+  try {
+    driver = await new Builder()
+      .forBrowser('chrome')
+      .setChromeOptions(options)
+      .setChromeService(new chrome.ServiceBuilder(resolveChromeDriverPath()))
+      .build();
+  } catch (error) {
+    fs.rmSync(userDataDir, { recursive: true, force: true });
+    throw error;
+  }
+
+  // Đặt timeout rõ ràng để tránh kẹt khi website phản hồi chậm.
+  await driver.manage().setTimeouts({
+    implicit: 0,
+    pageLoad: 45000,
+    script: 30000
+  });
+
+  driver.__tempUserDataDir = userDataDir;
+
+  return driver;
 }
 
 async function findFirstDisplayed(driver, xpathList, timeout = 7000) {
@@ -149,7 +180,8 @@ async function tryReadText(driver, xpathList) {
       try {
         if (await element.isDisplayed()) {
           const text = (await element.getText() || '').trim();
-          if (text) {
+          // Bỏ qua block text quá dài vì thường là container bao cả trang.
+          if (text && text.length <= 160) {
             return text;
           }
         }
@@ -162,7 +194,13 @@ async function tryReadText(driver, xpathList) {
 }
 
 function parseCurrency(text) {
-  const normalized = String(text || '').replace(/[^\d]/g, '');
+  const rawText = String(text || '');
+  const moneyTokens = rawText.match(/\d{1,3}(?:[.,]\d{3})+/g);
+  if (moneyTokens?.length) {
+    const candidate = moneyTokens[moneyTokens.length - 1].replace(/[^\d]/g, '');
+    return candidate ? Number(candidate) : 0;
+  }
+  const normalized = rawText.replace(/[^\d]/g, '');
   return normalized ? Number(normalized) : 0;
 }
 
@@ -430,7 +468,7 @@ async function clearCart(driver) {
 }
 
 async function dismissBlockingOverlays(driver) {
-  await driver.executeScript(`
+  await withTimeout(driver.executeScript(`
     const selectors = ['.modal-backdrop', '.modal', '.popup', '.fancybox-overlay', '.fancybox-wrap', '[role="dialog"]'];
     selectors.forEach((selector) => {
       document.querySelectorAll(selector).forEach((node) => {
@@ -440,7 +478,81 @@ async function dismissBlockingOverlays(driver) {
       });
     });
     document.body.classList.remove('modal-open');
+  `), 5000, 'Timeout khi ẩn overlay');
+}
+
+// XPath fallback cho vùng số lượng trên trang giỏ hàng.
+const QUANTITY_HIGHLIGHT_XPATHS = [
+  "(//input[@name='updates[]' or starts-with(@name,'updates')])[1]",
+  "(//input[contains(@class,'qty') or contains(@class,'quantity')])[1]",
+  "(//input[@type='number'])[1]",
+  "(//tr[contains(@class,'line-item') or contains(@class,'line-item-container')]//*[self::input or self::button or self::span][contains(@class,'qty') or contains(@class,'quantity')])[1]",
+  "(//*[contains(@class,'quantity') or contains(@class,'qty')][.//input])[1]"
+];
+
+async function findQuantityHighlightElement(driver, extraXpaths = []) {
+  const xpaths = [...extraXpaths, ...QUANTITY_HIGHLIGHT_XPATHS];
+
+  for (const xpath of xpaths) {
+    try {
+      const element = await findFirstDisplayed(driver, [xpath], 1500);
+      return { element, xpath };
+    } catch (error) {
+      // Tiếp tục thử XPath tiếp theo cho đến khi tìm thấy.
+    }
+  }
+
+  const fallbackElement = await driver.executeScript(`
+    const selectors = [
+      "input[name='updates[]']",
+      "input[name^='updates']",
+      "input[type='number']",
+      "input[class*='qty']",
+      "input[class*='quantity']"
+    ];
+    for (const selector of selectors) {
+      const target = [...document.querySelectorAll(selector)].find((node) => node && node.offsetParent !== null);
+      if (target) {
+        return target.closest("tr, .line-item-container, .line-item, .cart-item, .quantity, td, div") || target;
+      }
+    }
+    return null;
   `);
+
+  if (fallbackElement) {
+    return { element: fallbackElement, xpath: '<css-fallback:quantity>' };
+  }
+
+  throw new Error(`Không tìm thấy vùng số lượng để highlight. XPath đã thử: ${xpaths.join(' | ')}`);
+}
+
+// Chụp ảnh theo trạng thái test 
+async function captureScreen(driver, testContext, nameToSave, testStatus) {
+  const reportDir = path.join(process.cwd(), 'mochawesome-report');
+  const screenshotDir = path.join(reportDir, 'screenshots');
+  ensureDirectory(screenshotDir);
+
+  const safeName = String(nameToSave || 'test')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/gi, '_');
+  const status = testStatus === 'passed' ? 'PASS' : 'FAIL';
+  const fileName = `${safeName}_${Date.now()}_${status}.png`;
+  const fullPath = path.join(screenshotDir, fileName);
+
+  try {
+    await dismissBlockingOverlays(driver);
+  } catch (error) {
+    // Không chặn luồng chụp nếu thao tác ẩn popup lỗi.
+  }
+
+  try {
+    const image = await withTimeout(driver.takeScreenshot(), 15000, 'Timeout khi chụp screenshot');
+    fs.writeFileSync(fullPath, image, 'base64');
+    addContext(testContext, `screenshots/${fileName}`);
+  } catch (error) {
+    // Không làm fail test chỉ vì không chụp được screenshot.
+  }
 }
 
 async function captureEvidence(driver, testContext, options = {}) {
@@ -455,13 +567,20 @@ async function captureEvidence(driver, testContext, options = {}) {
 
   const highlightedElements = [];
   if (options.highlightXpaths?.length) {
+    const missedXpaths = [];
     for (const xpath of options.highlightXpaths) {
       try {
         const element = await findFirstDisplayed(driver, [xpath], 2000);
         highlightedElements.push(element);
       } catch (error) {
-        // Bỏ qua XPath không tìm thấy để vẫn chụp được evidence.
+        missedXpaths.push(xpath);
       }
+    }
+
+    if (!highlightedElements.length) {
+      const quantityTarget = await findQuantityHighlightElement(driver, missedXpaths);
+      highlightedElements.push(quantityTarget.element);
+      addContext(testContext, `Resolved highlight target: ${quantityTarget.xpath}`);
     }
 
     if (highlightedElements.length) {
@@ -506,16 +625,35 @@ async function captureEvidence(driver, testContext, options = {}) {
   addContext(testContext, `screenshots/${fileName}`);
 }
 
+async function findFirstDisplayedValue(driver, xpathList, timeout = 7000) {
+  const element = await findFirstDisplayed(driver, xpathList, timeout);
+  return {
+    element,
+    value: Number(await element.getAttribute('value')) || 0
+  };
+}
+
+function removeTempChromeProfile(driver) {
+  const tempUserDataDir = driver?.__tempUserDataDir;
+  if (tempUserDataDir) {
+    fs.rmSync(tempUserDataDir, { recursive: true, force: true });
+  }
+}
+
 module.exports = {
   addProductToCart,
   addTestMeta,
+  captureScreen,
   captureEvidence,
   clearCart,
   createChromeDriver,
+  findFirstDisplayed,
+  findFirstDisplayedValue,
   formatReportTime,
   getDisplayedCount,
   parseCurrency,
   getCartSummarySnapshot,
+  removeTempChromeProfile,
   tryReadText,
   updateQuantity,
   waitForCartStable
