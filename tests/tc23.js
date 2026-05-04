@@ -13,14 +13,14 @@ describe("TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn", 
     const data = testData.find(item => item.testCase === "tc23");
 
     before(async function () {
-        driver = await new Builder().forBrowser('chrome').build();
-
+        driver = await new Builder().forBrowser("chrome").build();
         startTime = Date.now();
-        moreDetails(this, "Tester: LY HIEU VY");
+        await driver.manage().window().maximize();
+    });
+    beforeEach(function () {
+        moreDetails(this, "Tester: Lý Hiểu Vy");
         moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
         moreDetails(this, "This is evidence of the test case");
-
-        await driver.manage().window().maximize();
     });
 
     afterEach(async function () {

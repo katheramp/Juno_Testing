@@ -1,121 +1,74 @@
+const { Builder, By, until } = require('selenium-webdriver');
 const { expect } = require('chai');
-const testData = require('../data/data.json');
-const {
-  addProductToCart,
-  addTestMeta,
-  captureScreen,
-  clearCart,
-  createChromeDriver,
-  findFirstDisplayedValue,
-  formatReportTime,
-  getCartSummarySnapshot,
-  parseCurrency,
-  removeTempChromeProfile,
-  tryReadText,
-  updateQuantity,
-  waitForCartStable
-} = require('../functions/helpers');
-const { LOCATORS } = require('../functions/locators');
+const testData = require('../data/test_data.json');
+const locators = require('../functions/locators');
+const { captureScreen } = require('../functions/helper');
+const addContext = require('mochawesome/addContext');
+const moreDetails = addContext;
 
-const TESTER_NAME = 'Đào Huỳnh Gia Hân - 81012302863';
-const tc24Data = testData.find(item => item.testcase === 'TC24');
-
-if (!tc24Data) {
-  throw new Error('Không tìm thấy dữ liệu TC24 trong data/data.json');
-}
-
-function withTimeout(promise, timeoutMs, message) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error(message)), timeoutMs))
-  ]);
-}
-
-function validateTC24({ beforeQuantity, afterQuantity, expectedQuantity, oldTotal, newTotal, oldSummaryText, newSummaryText }) {
-  expect(afterQuantity).to.equal(
-    expectedQuantity,
-    `Số lượng sau cập nhật không đúng. Trước=${beforeQuantity}, Sau=${afterQuantity}, Mong đợi=${expectedQuantity}`
-  );
-
-  const totalChanged = oldTotal > 0 && newTotal > oldTotal;
-  const summaryChanged = oldSummaryText !== newSummaryText;
-  expect(totalChanged || summaryChanged).to.equal(
-    true,
-    `Tổng tiền chưa tăng hoặc phần tóm tắt chưa đổi. Trước=${oldTotal} (${oldSummaryText}), Sau=${newTotal} (${newSummaryText})`
-  );
-}
-
-describe(`${tc24Data.testcase}: ${tc24Data.testcasename}`, function () {
-  this.timeout(240000);
-  this.retries(1);
+describe("TC24: Cập nhật số lượng hợp lệ và tổng tiền thay đổi đúng", function () {
   let driver;
+  let startTime;
+  const data = testData.find(item => item.testCase === "tc24");
 
   before(async function () {
-    driver = await createChromeDriver();
-    addTestMeta(this, `Tester: ${TESTER_NAME}`);
-    addTestMeta(this, `Requirement: ${tc24Data.requirement}`);
-    addTestMeta(this, `Expected: ${tc24Data.expected}`);
-    addTestMeta(this, `Product URL: ${tc24Data.productUrl || tc24Data.url}`);
+    driver = await new Builder().forBrowser("chrome").build();
+    startTime = Date.now();
+    await driver.manage().window().maximize();
   });
-
   beforeEach(function () {
-    addTestMeta(this, `Tester: ${TESTER_NAME}`);
-    addTestMeta(this, `Start Time: ${formatReportTime(new Date())}`);
-    addTestMeta(this, 'Evidence: Screenshot after test execution.');
+    moreDetails(this, "Tester: Đào Huỳnh Gia Hân");
+    moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
+    moreDetails(this, "This is evidence of the test case");
   });
-
   afterEach(async function () {
-    try {
-      await withTimeout(
-        captureScreen(driver, this, `${tc24Data.testcase}_${this.currentTest.title}`, this.currentTest.state),
-        20000,
-        'Timeout khi chụp screenshot TC24'
-      );
-    } catch (error) {
-      // Không làm fail hook chỉ vì screenshot bị treo.
-    }
-    addTestMeta(this, `End Time: ${formatReportTime(new Date())}`);
+    await captureScreen(driver, this, this.currentTest.title, this.currentTest.state);
   });
 
   after(async function () {
-    if (driver) {
-      try {
-        await withTimeout(driver.quit(), 20000, 'Timeout khi đóng trình duyệt TC24');
-      } catch (error) {
-        // Bỏ qua lỗi đóng browser để không treo toàn bộ run.
-      } finally {
-        removeTempChromeProfile(driver);
-      }
-    }
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    moreDetails(this, `End: ${new Date(endTime).toLocaleString()}`);
+    moreDetails(this, `Duration: ${duration} ms`);
+
+    if (driver) await driver.quit();
   });
 
-  it('Cập nhật số lượng hợp lệ và tổng tiền thay đổi đúng', async function () {
-    await clearCart(driver);
-    await addProductToCart(driver, tc24Data.productUrl || tc24Data.url, LOCATORS);
-    await waitForCartStable(driver, LOCATORS);
+  it("Nên cập nhật số lượng và tổng tiền thành công", async function () {
+    // 1. Vào trang sản phẩm
+    await driver.get(data.url);
+    await driver.sleep(2000);
 
-    // Dùng locator fallback để tránh phụ thuộc vào XPath đầu tiên.
-    const { value: quantityBefore } = await findFirstDisplayedValue(driver, LOCATORS.quantityInputs, 10000);
-    const oldTotalText = await tryReadText(driver, LOCATORS.totalPrice);
-    const oldTotal = parseCurrency(oldTotalText);
-    const oldSummary = await getCartSummarySnapshot(driver);
+    // 2. Bấm nút Mua
+    const buyBtn = await driver.wait(until.elementLocated(By.xpath(locators.detailPage.buyBtn)), 10000);
+    await driver.wait(until.elementIsVisible(buyBtn), 10000);
+    await buyBtn.click();
+    await driver.sleep(2000);
 
-    const updatedInput = await updateQuantity(driver, LOCATORS, tc24Data.newQuantity);
-    const quantityAfter = updatedInput ? Number(await updatedInput.getAttribute('value')) || 0 : 0;
-    await driver.sleep(1800);
+    // 3. Vào giỏ hàng
+    const viewCartBtn = await driver.wait(until.elementLocated(By.xpath(locators.miniCartDrawer.viewCartBtn)), 10000);
+    await driver.wait(until.elementIsVisible(viewCartBtn), 10000);
+    await viewCartBtn.click();
+    await driver.sleep(3000);
 
-    const newTotalText = await tryReadText(driver, LOCATORS.totalPrice);
-    const newTotal = parseCurrency(newTotalText);
-    const newSummary = await getCartSummarySnapshot(driver);
+    // 4. Lấy tổng tiền ban đầu
+    const oldTotalEl = await driver.wait(until.elementLocated(By.xpath(locators.cartPage.totalAmount)), 10000);
+    const oldTotalText = await oldTotalEl.getText();
+    const oldTotal = parseInt(oldTotalText.replace(/[^0-9]/g, ''));
 
-    validateTC24({
-      beforeQuantity: quantityBefore,
-      afterQuantity: quantityAfter,
-      expectedQuantity: tc24Data.newQuantity,
-      oldTotal,
-      newTotal,
-      oldSummaryText: oldSummary.summaryText,
-      newSummaryText: newSummary.summaryText
-    });
+    // 5. Bấm nút cộng (+) để tăng số lượng từ 1 lên 2
+    const increaseBtnXpath = locators.cartPage.increaseQtyBtn(data.productName);
+    const increaseBtn = await driver.wait(until.elementLocated(By.xpath(increaseBtnXpath)), 10000);
+    await driver.wait(until.elementIsVisible(increaseBtn), 10000);
+
+    await increaseBtn.click();
+    await driver.sleep(3000); // Đợi hệ thống load lại giá
+
+    // 6. Verify giá tiền phải lớn hơn giá cũ
+    const newTotalEl = await driver.wait(until.elementLocated(By.xpath(locators.cartPage.totalAmount)), 10000);
+    const newTotalText = await newTotalEl.getText();
+    const newTotal = parseInt(newTotalText.replace(/[^0-9]/g, ''));
+
+    expect(newTotal).to.be.greaterThan(oldTotal, "Tổng tiền không tăng lên sau khi thêm số lượng");
   });
 });

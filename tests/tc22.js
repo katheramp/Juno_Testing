@@ -13,16 +13,15 @@ describe("TC22: Thêm số lượng sản phẩm hợp lệ với số lượng 
     const data = testData.find(item => item.testCase === "tc22");
 
     before(async function () {
-        driver = await new Builder().forBrowser('chrome').build();
-
+        driver = await new Builder().forBrowser("chrome").build();
         startTime = Date.now();
-        moreDetails(this, "Tester: LY HIEU VY");
-        moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
-        moreDetails(this, "This is evidence of the test case");
-
         await driver.manage().window().maximize();
     });
-
+    beforeEach(function () {
+        moreDetails(this, "Tester: Lý Hiểu Vy");
+        moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
+        moreDetails(this, "This is evidence of the test case");
+    });
     afterEach(async function () {
         await captureScreen(driver, this, this.currentTest.title, this.currentTest.state);
     });

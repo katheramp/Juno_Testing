@@ -9,11 +9,8 @@ const moreDetails = addContext;
 describe("TC37: Kiểm tra hiển thị cảnh báo lỗi khi nhập Số điện thoại chứa ký tự chữ cái", function () {
     let driver;
     let startTime;
-    // Lấy đúng data của tc37
     const data = testData.find(item => item.testCase === "tc37");
 
-    // Hàm dùng riêng cho case này:
-    // Một số button trên site render text hơi trễ nên tìm theo getText() sẽ bền hơn XPath thuần
     async function findButtonByText(text, timeout = 20000) {
         await driver.wait(async () => {
             const buttons = await driver.findElements(By.css("button"));
@@ -38,13 +35,13 @@ describe("TC37: Kiểm tra hiển thị cảnh báo lỗi khi nhập Số điệ
 
     before(async function () {
         driver = await new Builder().forBrowser("chrome").build();
-
         startTime = Date.now();
-        moreDetails(this, "Tester: Trần Nguyễn Kim Ngân (KimNgan) - MSSV: 81012302877");
+        await driver.manage().window().maximize();
+    });
+    beforeEach(function () {
+        moreDetails(this, "Tester: Trần Nguyễn Kim Ngân");
         moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
         moreDetails(this, "This is evidence of the test case");
-
-        await driver.manage().window().maximize();
     });
 
     afterEach(async function () {

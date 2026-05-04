@@ -12,7 +12,7 @@ describe("TC16: Lọc sản phẩm theo thuộc tính (Loại sản phẩm/Màu 
     // Lấy đúng data của tc16
     const data = testData.find(item => item.testCase === "tc16");
 
-    // Hàm nhỏ để bỏ dấu tiếng Việt khi cần verify text mềm hơn
+    // Hàm nhỏ để bỏ dấu tiếng Việt khi cần verify text
     function normalizeTextNoTone(text) {
         return text
             .normalize("NFD")
@@ -22,15 +22,14 @@ describe("TC16: Lọc sản phẩm theo thuộc tính (Loại sản phẩm/Màu 
 
     before(async function () {
         driver = await new Builder().forBrowser("chrome").build();
-
         startTime = Date.now();
-        moreDetails(this, "Tester: Trần Nguyễn Kim Ngân (KimNgan) - MSSV: 81012302877");
-        moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
-        moreDetails(this, "This is evidence of the test case");
-
         await driver.manage().window().maximize();
     });
-
+    beforeEach(function () {
+        moreDetails(this, "Tester: Trần Nguyễn Kim Ngân");
+        moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
+        moreDetails(this, "This is evidence of the test case");
+    });
     afterEach(async function () {
         await captureScreen(driver, this, this.currentTest.title, this.currentTest.state);
     });

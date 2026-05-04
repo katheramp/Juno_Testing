@@ -1,13 +1,41 @@
+TC16: Lọc sản phẩm theo thuộc tính (Loại sản phẩm/Màu sắc)
+1. Truy cập trang danh mục sản phẩm (ví dụ: Giày)
+2. Mở bộ lọc sản phẩm
+3. Chọn các thuộc tính muốn lọc (ví dụ: Màu sắc: Đỏ)
+4. Nhấn nút áp dụng bộ lọc
+Expected Result: Danh sách sản phẩm hiển thị đúng các sản phẩm thỏa mãn thuộc tính đã chọn.
+
+TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn
+1. Truy cập trang chi tiết sản phẩm
+2. Bấm nút Mua hàng để thêm sản phẩm vào giỏ
+3. Đi tới trang Giỏ hàng
+4. Nhập một số lượng hợp lệ (trong mức tồn kho) vào ô số lượng và nhấn Enter
+Expected Result: Số lượng được cập nhật thành công, tổng tiền hiển thị chính xác theo giá trị mới.
+
+TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn
+1. Truy cập trang chi tiết sản phẩm
+2. Bấm nút Mua hàng để thêm sản phẩm vào giỏ
+3. Đi tới trang Giỏ hàng
+4. Nhập một số lượng cực lớn vượt quá tồn kho thực tế và nhấn Enter
+Expected Result: Hệ thống hiển thị thông báo lỗi hoặc cảnh báo về giới hạn số lượng sản phẩm trong kho.
+
 TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng
-1. Truy cập trang chủ
+1. Truy cập trang sản phẩm và thêm vào giỏ hàng
 2. Ấn xem giỏ hàng
 3. Chọn một sản phẩm có sẵn trong giỏ hàng với số lượng là 1
-4. Thay đổi số lượng từ 1 → 2
-Expected Result: Số lượng được cập nhật thành công, tổng tiền thay đổi.
+4. Thay đổi số lượng từ 1 → 2 và nhấn Enter
+Expected Result: Số lượng được cập nhật thành công, tổng tiền thay đổi tương ứng với số lượng mới.
 
-TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng
-1. Truy cập trang chủ
+TC25: Giảm số lượng về 0 trong giỏ hàng
+1. Truy cập trang sản phẩm và thêm vào giỏ hàng
 2. Ấn xem giỏ hàng
 3. Chọn một sản phẩm có sẵn trong giỏ hàng
-4. Nhập số lượng = 0
-Expected Result: Sản phẩm được cập nhật số lượng bị loại bỏ hoàn toàn khỏi danh sách hiển thị trong giỏ hàng.
+4. Nhập số lượng = 0 và nhấn Enter
+Expected Result: Sản phẩm bị loại bỏ hoàn toàn khỏi danh sách hiển thị trong giỏ hàng.
+
+TC37: Kiểm tra hiển thị cảnh báo lỗi khi nhập Số điện thoại chứa ký tự chữ cái
+1. Đăng nhập và truy cập trang quản lý sổ địa chỉ
+2. Nhấn nút "Thêm địa chỉ mới"
+3. Nhập đầy đủ thông tin, riêng trường Số điện thoại nhập giá trị có chứa chữ cái (ví dụ: 090abc123)
+4. Nhấn nút Lưu
+Expected Result: Hệ thống hiển thị thông báo lỗi "Số điện thoại không hợp lệ" hoặc cảnh báo tương đương ngay tại trường nhập liệu.

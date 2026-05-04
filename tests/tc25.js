@@ -1,104 +1,69 @@
+const { Builder, By, until } = require('selenium-webdriver');
 const { expect } = require('chai');
-const testData = require('../data/data.json');
-const {
-  addProductToCart,
-  addTestMeta,
-  captureScreen,
-  clearCart,
-  createChromeDriver,
-  formatReportTime,
-  getDisplayedCount,
-  removeTempChromeProfile,
-  tryReadText,
-  updateQuantity,
-  waitForCartStable
-} = require('../functions/helpers');
-const { LOCATORS } = require('../functions/locators');
+const testData = require('../data/test_data.json');
+const locators = require('../functions/locators');
+const { captureScreen } = require('../functions/helper');
+const addContext = require('mochawesome/addContext');
+const moreDetails = addContext;
 
-const TESTER_NAME = 'Đào Huỳnh Gia Hân - 81012302863';
-const tc25Data = testData.find(item => item.testcase === 'TC25');
-
-if (!tc25Data) {
-  throw new Error('Không tìm thấy dữ liệu TC25 trong data/data.json');
-}
-
-function withTimeout(promise, timeoutMs, message) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error(message)), timeoutMs))
-  ]);
-}
-
-// TC25 pass khi item biến mất hoặc giỏ hiển thị trạng thái trống.
-function validateTC25({ itemCountAfterUpdate, quantityInputsAfterUpdate, emptyMessage }) {
-  const isRemoved = itemCountAfterUpdate === 0 && quantityInputsAfterUpdate === 0;
-  const hasEmptyMessage = Boolean(emptyMessage);
-  expect(isRemoved || hasEmptyMessage).to.equal(
-    true,
-    `Giỏ hàng chưa trống sau khi cập nhật về 0. itemCount=${itemCountAfterUpdate}, quantityInputs=${quantityInputsAfterUpdate}, emptyMessage=${emptyMessage || '<empty>'}`
-  );
-}
-
-describe(`${tc25Data.testcase}: ${tc25Data.testcasename}`, function () {
-  this.timeout(240000);
-  this.retries(1);
+describe("TC25: Giảm số lượng về 0", function () {
   let driver;
+  let startTime;
+  const data = testData.find(item => item.testCase === "tc25");
 
   before(async function () {
-    driver = await createChromeDriver();
-    addTestMeta(this, `Tester: ${TESTER_NAME}`);
-    addTestMeta(this, `Requirement: ${tc25Data.requirement}`);
-    addTestMeta(this, `Expected: ${tc25Data.expected}`);
-    addTestMeta(this, `Product URL: ${tc25Data.productUrl || tc25Data.url}`);
+    driver = await new Builder().forBrowser("chrome").build();
+    startTime = Date.now();
+    await driver.manage().window().maximize();
   });
-
   beforeEach(function () {
-    addTestMeta(this, `Tester: ${TESTER_NAME}`);
-    addTestMeta(this, `Start Time: ${formatReportTime(new Date())}`);
-    addTestMeta(this, 'Evidence: Screenshot after test execution.');
+    moreDetails(this, "Tester: Đào Huỳnh Gia Hân");
+    moreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);
+    moreDetails(this, "This is evidence of the test case");
   });
 
   afterEach(async function () {
-    try {
-      await withTimeout(
-        captureScreen(driver, this, `${tc25Data.testcase}_${this.currentTest.title}`, this.currentTest.state),
-        20000,
-        'Timeout khi chụp screenshot TC25'
-      );
-    } catch (error) {
-      // Không làm fail hook chỉ vì screenshot bị treo.
-    }
-    addTestMeta(this, `End Time: ${formatReportTime(new Date())}`);
+    await captureScreen(driver, this, this.currentTest.title, this.currentTest.state);
   });
 
   after(async function () {
-    if (driver) {
-      try {
-        await withTimeout(driver.quit(), 20000, 'Timeout khi đóng trình duyệt TC25');
-      } catch (error) {
-        // Bỏ qua lỗi đóng browser để không treo toàn bộ run.
-      } finally {
-        removeTempChromeProfile(driver);
-      }
-    }
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    moreDetails(this, `End: ${new Date(endTime).toLocaleString()}`);
+    moreDetails(this, `Duration: ${duration} ms`);
+
+    if (driver) await driver.quit();
   });
 
-  it('Giảm số lượng về 0 thì sản phẩm bị xóa khỏi giỏ', async function () {
-    await clearCart(driver);
-    await addProductToCart(driver, tc25Data.productUrl || tc25Data.url, LOCATORS);
-    await waitForCartStable(driver, LOCATORS);
-
-    await updateQuantity(driver, LOCATORS, tc25Data.newQuantity);
+  it("Giảm số lượng về 0 thì hiển thị giỏ hàng trống", async function () {
+    // 1. Vào trang sản phẩm
+    await driver.get(data.url);
     await driver.sleep(2000);
 
-    const itemCountAfterUpdate = await getDisplayedCount(driver, LOCATORS.cartItems);
-    const quantityInputsAfterUpdate = await getDisplayedCount(driver, LOCATORS.quantityInputs);
-    const emptyMessage = await tryReadText(driver, LOCATORS.cartEmptyMessage);
+    // 2. Bấm nút Mua
+    const buyBtn = await driver.wait(until.elementLocated(By.xpath(locators.detailPage.buyBtn)), 10000);
+    await driver.wait(until.elementIsVisible(buyBtn), 10000);
+    await buyBtn.click();
+    await driver.sleep(2000);
 
-    validateTC25({
-      itemCountAfterUpdate,
-      quantityInputsAfterUpdate,
-      emptyMessage
-    });
+    // 3. Vào giỏ hàng
+    const viewCartBtn = await driver.wait(until.elementLocated(By.xpath(locators.miniCartDrawer.viewCartBtn)), 10000);
+    await driver.wait(until.elementIsVisible(viewCartBtn), 10000);
+    await viewCartBtn.click();
+    await driver.sleep(3000);
+
+    // 4. Bấm nút trừ (-) để giảm số lượng từ 1 về 0
+    const decreaseBtnXpath = locators.cartPage.decreaseQtyBtn(data.productName);
+    const decreaseBtn = await driver.wait(until.elementLocated(By.xpath(decreaseBtnXpath)), 10000);
+    await driver.wait(until.elementIsVisible(decreaseBtn), 10000);
+
+    await decreaseBtn.click();
+    await driver.sleep(3000); // Đợi hệ thống xử lý xóa sản phẩm
+
+    // 5. Verify thông báo giỏ hàng trống xuất hiện
+    const emptyMsgXpath = locators.cartPage.cartEmptyMessage[0]; // Lấy phần tử đầu tiên trong mảng Locator
+    const emptyMsgElements = await driver.findElements(By.xpath(emptyMsgXpath));
+
+    expect(emptyMsgElements.length).to.be.greaterThan(0, "Không hiển thị thông báo giỏ hàng trống sau khi xóa sản phẩm");
   });
 });

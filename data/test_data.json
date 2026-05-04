@@ -6,7 +6,7 @@
     "testName": "Lọc sản phẩm theo thuộc tính (Loại sản phẩm/Màu sắc)",
     "categoryName": "Giày",
     "productType": "Giày cao gót",
-    "color": "Đỏ",
+    "color": "đỏ",
     "sampleSize": 3
   },
   {
@@ -20,10 +20,24 @@
   {
     "url": "https://juno.vn/",
     "testCase": "tc23",
-    "testName": "Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
+    "testName": "Thêm số lượng sản phẩm vượt mức kho còn tồn",
     "productName": "Túi Xách Nhỏ Mini Đính Hạt Ma Cherie",
     "amountToEnter": "3",
     "expectedNotification": "Cập nhật số lượng sản phẩm thất bại"
+  },
+  {
+    "url": "https://juno.vn/products/giay-sandal-co-dup-quai-rut-Ax4j",
+    "testCase": "tc24",
+    "testName": "Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng",
+    "productName": "Giày Sandal Có Đúp Quai Rút",
+    "newQuantity": 2
+  },
+  {
+    "url": "https://juno.vn/products/giay-sandal-co-dup-quai-rut-Ax4j",
+    "testCase": "tc25",
+    "testName": "Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng",
+    "productName": "Giày Sandal Có Đúp Quai Rút",
+    "newQuantity": 0
   },
   {
     "url": "https://juno.vn/",

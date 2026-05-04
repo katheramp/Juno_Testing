@@ -34,7 +34,10 @@ module.exports = {
         productCards: "//div[contains(@class, 'w-product-card')]",
         firstProductLink: "(//div[contains(@class, 'variant-name')]//a)[1]",
         productNameInCard: ".//div[contains(@class, 'variant-name')]",
-        colorSwatchInCard: function (colorName) { return `.//*[@title='${colorName.toLowerCase()}' or @title='${colorName}']`; }
+        colorSwatchInCard: function (colorName) {
+            const capitalizedColor = colorName.charAt(0).toUpperCase() + colorName.slice(1).toLowerCase();
+            return `.//img[@alt='${colorName.toLowerCase()}' or @alt='${colorName}' or @alt='${capitalizedColor}']`;
+        }
     },
     detailPage: {
         productName: "//div[contains(@class, 'product-price')]/preceding-sibling::div",
