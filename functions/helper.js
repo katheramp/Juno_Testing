@@ -17,6 +17,7 @@ async function captureScreen(driver, testContext, nameToSave, testStatus) {
         .replace(/[^a-z0-9]/gi, '_');
 
     const status = testStatus === 'passed' ? "PASS" : "FAIL";
+
     const fileName = `${safeName}_${Date.now()}_${status}.png`;
     const fullPath = path.join(screenshotDir, fileName);
 
@@ -31,3 +32,4 @@ async function captureScreen(driver, testContext, nameToSave, testStatus) {
 }
 
 module.exports = { captureScreen };
+

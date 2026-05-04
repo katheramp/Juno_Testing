@@ -1,7 +1,7 @@
 {
   "name": "juno_testing",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000J\u0000u\u0000n\u0000o\u0000_\u0000T\u0000e\u0000s\u0000t\u0000i\u0000n\u0000g\u0000\r\u0000 \u0000",
+  "description": "Automation test cases for Juno website",
   "main": "index.js",
   "directories": {
     "test": "tests"
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/katheramp/Juno_Testing.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Dao Huynh Gia Han - Tran Nguyen Kim Ngan - Ly Hieu Vy",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {

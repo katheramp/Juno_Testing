@@ -1,18 +1,36 @@
 [
-    {
-        "url": "https://juno.vn/",
-        "testCase": "tc22",
-        "testName": "Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
-        "productName": "Túi Xách Nhỏ Mini Đính Hạt Ma Cherie",
-        "amountToEnter": "2",
-        "expectedPrice": "5,748,000 đ"
-    },
-    {
-        "url": "https://juno.vn/",
-        "testCase": "tc23",
-        "testName": "Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
-        "productName": "Túi Xách Nhỏ Mini Đính Hạt Ma Cherie",
-        "amountToEnter": "3",
-        "expectedNotification": "Cập nhật số lượng sản phẩm thất bại"
-    }
+  {
+    "url": "https://juno.vn/",
+    "collectionUrl": "https://juno.vn/collections/giay",
+    "testCase": "tc16",
+    "testName": "Lọc sản phẩm theo thuộc tính (Loại sản phẩm/Màu sắc)",
+    "categoryName": "Giày",
+    "productType": "Giày cao gót",
+    "color": "Đỏ",
+    "sampleSize": 3
+  },
+  {
+    "url": "https://juno.vn/",
+    "testCase": "tc22",
+    "testName": "Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
+    "productName": "Túi Xách Nhỏ Mini Đính Hạt Ma Cherie",
+    "amountToEnter": "2",
+    "expectedPrice": "5,748,000 đ"
+  },
+  {
+    "url": "https://juno.vn/",
+    "testCase": "tc23",
+    "testName": "Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
+    "productName": "Túi Xách Nhỏ Mini Đính Hạt Ma Cherie",
+    "amountToEnter": "3",
+    "expectedNotification": "Cập nhật số lượng sản phẩm thất bại"
+  },
+  {
+    "url": "https://juno.vn/",
+    "productUrl": "https://juno.vn/products/tui-xach-nho-mini-dinh-hat-ma-cherie-4zLD",
+    "testCase": "tc37",
+    "testName": "Kiểm tra hiển thị cảnh báo lỗi khi nhập Số điện thoại chứa ký tự chữ cái",
+    "phoneInvalid": "abc1234567",
+    "expectedValidation": "Vui lòng nhập số điện thoại hợp lệ"
+  }
 ]
