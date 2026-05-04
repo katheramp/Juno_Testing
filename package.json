@@ -7,7 +7,13 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha \"tests/**/*.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true"
+    "test": "mocha \"tests/**/*.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true",
+    "test:tc16": "mocha \"tests/tc16.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true",
+    "test:tc22": "mocha \"tests/tc22.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true",
+    "test:tc23": "mocha \"tests/tc23.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true",
+    "test:tc24": "mocha \"tests/tc24.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true",
+    "test:tc25": "mocha \"tests/tc25.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true",
+    "test:tc37": "mocha \"tests/tc37.js\" --no-timeouts --reporter mochawesome --reporter-options charts=true,overwrite=true"
   },
   "repository": {
     "type": "git",

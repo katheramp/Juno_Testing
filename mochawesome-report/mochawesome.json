@@ -5,9 +5,15 @@
     "passes": 2,
     "pending": 0,
     "failures": 0,
+<<<<<<< HEAD
     "start": "2026-05-03T17:33:06.720Z",
     "end": "2026-05-03T17:33:45.341Z",
     "duration": 38621,
+=======
+    "start": "2026-05-04T14:22:42.237Z",
+    "end": "2026-05-04T14:25:33.136Z",
+    "duration": 170899,
+>>>>>>> origin/GiaHan
     "testsRegistered": 2,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,7 +24,11 @@
   },
   "results": [
     {
+<<<<<<< HEAD
       "uuid": "f1d1e653-5f9d-4562-8936-e0866262ad8f",
+=======
+      "uuid": "8092638b-8c56-413d-b3ed-33aceafdf3da",
+>>>>>>> origin/GiaHan
       "title": "",
       "fullFile": "",
       "file": "",
@@ -27,6 +37,7 @@
       "tests": [],
       "suites": [
         {
+<<<<<<< HEAD
           "uuid": "52a505e2-c0db-4d81-b2ca-22892223b7d7",
           "title": "TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn",
           "fullFile": "D:\\SIU\\Testing\\Juno_Testing\\tests\\tc22.js",
@@ -37,11 +48,24 @@
               "fullTitle": "TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn \"before all\" hook in \"TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn\"",
               "timedOut": false,
               "duration": 879,
+=======
+          "uuid": "a142971e-bbca-4e02-8315-88fcafeaf689",
+          "title": "TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng",
+          "fullFile": "D:\\Projects\\SoftwareTesting\\Juno_Testing\\tests\\tc24.js",
+          "file": "\\tests\\tc24.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "fullTitle": "TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng \"before all\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 721,
+>>>>>>> origin/GiaHan
               "state": null,
               "speed": null,
               "pass": false,
               "fail": false,
               "pending": false,
+<<<<<<< HEAD
               "context": "[\n  \"Tester: LY HIEU VY\",\n  \"Start: 5/4/2026, 12:33:07 AM\",\n  \"This is evidence of the test case\"\n]",
               "code": "driver = await new Builder().forBrowser('chrome').build();\nstartTime = Date.now();\nmoreDetails(this, \"Tester: LY HIEU VY\");\nmoreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);\nmoreDetails(this, \"This is evidence of the test case\");\nawait driver.manage().window().maximize();",
               "err": {},
@@ -67,55 +91,134 @@
               "err": {},
               "uuid": "cd59c8b3-a1a1-414b-a4d5-93efe2266737",
               "parentUUID": "52a505e2-c0db-4d81-b2ca-22892223b7d7",
+=======
+              "context": "[\n  \"Tester: Đào Huỳnh Gia Hân - 81012302863\",\n  \"Requirement: FR11\",\n  \"Expected: Số lượng được cập nhật thành công, tổng tiền thay đổi.\",\n  \"Product URL: https://sales.juno.vn/products/giay-sandal-quai-manh-that-nut\"\n]",
+              "code": "driver = await createChromeDriver();\naddTestMeta(this, `Tester: ${TESTER_NAME}`);\naddTestMeta(this, `Requirement: ${tc24Data.requirement}`);\naddTestMeta(this, `Expected: ${tc24Data.expected}`);\naddTestMeta(this, `Product URL: ${tc24Data.productUrl || tc24Data.url}`);",
+              "err": {},
+              "uuid": "747e9cda-0973-4a9c-8d9d-4b749d224f87",
+              "parentUUID": "a142971e-bbca-4e02-8315-88fcafeaf689",
+>>>>>>> origin/GiaHan
               "isHook": true,
               "skipped": false
             },
             {
+<<<<<<< HEAD
               "title": "\"after each\" hook in \"TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn\"",
               "fullTitle": "TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn \"after each\" hook in \"TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn\"",
               "timedOut": false,
               "duration": 178,
+=======
+              "title": "\"before each\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "fullTitle": "TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng \"before each\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 0,
+>>>>>>> origin/GiaHan
               "state": null,
               "speed": null,
               "pass": false,
               "fail": false,
               "pending": false,
               "context": null,
+<<<<<<< HEAD
               "code": "await captureScreen(driver, this, this.currentTest.title, this.currentTest.state);",
               "err": {},
               "uuid": "d6e29334-1a5d-4cd5-b4a8-0d39964638ed",
               "parentUUID": "52a505e2-c0db-4d81-b2ca-22892223b7d7",
+=======
+              "code": "addTestMeta(this, `Tester: ${TESTER_NAME}`);\naddTestMeta(this, `Start Time: ${formatReportTime(new Date())}`);\naddTestMeta(this, 'Evidence: Screenshot after test execution.');",
+              "err": {},
+              "uuid": "ab9324a5-41cd-4573-a3b1-cd4bb999616a",
+              "parentUUID": "a142971e-bbca-4e02-8315-88fcafeaf689",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "fullTitle": "TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng \"after all\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 242,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "if (driver) {\n  try {\n    await withTimeout(driver.quit(), 20000, 'Timeout khi đóng trình duyệt TC24');\n  } catch (error) {\n    // Bỏ qua lỗi đóng browser để không treo toàn bộ run.\n  } finally {\n    removeTempChromeProfile(driver);\n  }\n}",
+              "err": {},
+              "uuid": "f248656b-267b-4c79-9edd-c831bfdbe444",
+              "parentUUID": "a142971e-bbca-4e02-8315-88fcafeaf689",
+              "isHook": true,
+              "skipped": false
+            },
+            {
+              "title": "\"after each\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "fullTitle": "TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng \"after each\" hook in \"TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 142,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n  await withTimeout(\n    captureScreen(driver, this, `${tc24Data.testcase}_${this.currentTest.title}`, this.currentTest.state),\n    20000,\n    'Timeout khi chụp screenshot TC24'\n  );\n} catch (error) {\n  // Không làm fail hook chỉ vì screenshot bị treo.\n}\naddTestMeta(this, `End Time: ${formatReportTime(new Date())}`);",
+              "err": {},
+              "uuid": "7df0b2c4-bc46-4e2f-ae21-d4afb34d4e7b",
+              "parentUUID": "a142971e-bbca-4e02-8315-88fcafeaf689",
+>>>>>>> origin/GiaHan
               "isHook": true,
               "skipped": false
             }
           ],
           "tests": [
             {
+<<<<<<< HEAD
               "title": "Nên tự động cập nhật tổng tiền khi thay đổi số lượng thành 12",
               "fullTitle": "TC22: Thêm số lượng sản phẩm hợp lệ với số lượng kho còn tồn Nên tự động cập nhật tổng tiền khi thay đổi số lượng thành 12",
               "timedOut": false,
               "duration": 17339,
+=======
+              "title": "Cập nhật số lượng hợp lệ và tổng tiền thay đổi đúng",
+              "fullTitle": "TC24: Cập nhật số lượng sản phẩm hợp lệ trong giỏ hàng Cập nhật số lượng hợp lệ và tổng tiền thay đổi đúng",
+              "timedOut": false,
+              "duration": 23620,
+>>>>>>> origin/GiaHan
               "state": "passed",
               "speed": "slow",
               "pass": true,
               "fail": false,
               "pending": false,
+<<<<<<< HEAD
               "context": "\"screenshots/Nen_tu__ong_cap_nhat_tong_tien_khi_thay__oi_so_luong_thanh_12_1777829604949_PASS.png\"",
               "code": "// 1. Vào web và đợi một chút cho trang load hẳn các element ẩn\nawait driver.get(data.url);\nawait driver.sleep(2000);\n// 2. Tìm kiếm sản phẩm\nconst searchInput = await driver.wait(until.elementLocated(By.xpath(locators.header.searchInput)), 10000);\nawait driver.wait(until.elementIsVisible(searchInput), 10000); // Chờ nó thực sự hiển thị\nawait searchInput.sendKeys(data.productName, Key.ENTER);\nawait driver.sleep(3000); // Dừng 3s để nhìn kết quả tìm kiếm load ra\n// 3. Chọn sản phẩm đầu tiên\nconst firstProduct = await driver.wait(until.elementLocated(By.xpath(locators.searchPage.firstProductLink)), 10000);\nawait driver.wait(until.elementIsVisible(firstProduct), 10000);\nawait firstProduct.click();\nawait driver.sleep(3000); // Dừng 3s để đợi trang Chi tiết sản phẩm load xong\n// 4. Bấm nút Mua\nconst buyBtn = await driver.wait(until.elementLocated(By.xpath(locators.detailPage.buyBtn)), 10000);\nawait driver.wait(until.elementIsVisible(buyBtn), 10000);\nawait buyBtn.click();\nawait driver.sleep(2000); // Đợi cái Mini Drawer (Giỏ hàng nhỏ) trượt từ phải sang\n// 5. Bấm vào nút Xem giỏ hàng trong Mini Drawer\nconst viewCartBtn = await driver.wait(until.elementLocated(By.xpath(locators.miniCartDrawer.viewCartBtn)), 10000);\nawait driver.wait(until.elementIsVisible(viewCartBtn), 10000);\nawait viewCartBtn.click();\nawait driver.sleep(3000); // Đợi load sang trang Giỏ hàng lớn\n// 6. Gõ thêm số lượng vào input trang Giỏ Hàng\nconst qtyInputXpath = locators.cartPage.qtyInput(data.productName);\nconst qtyInput = await driver.wait(until.elementLocated(By.xpath(qtyInputXpath)), 10000);\nawait driver.wait(until.elementIsVisible(qtyInput), 10000);\nawait qtyInput.sendKeys(data.amountToEnter, Key.ENTER);\nawait driver.sleep(2000); // Dừng 2s để hệ thống gọi API cập nhật lại giá tiền\n// 7. Chờ hệ thống load lại giá và Verify\nconst totalAmountLocator = By.xpath(locators.cartPage.totalAmount);\nawait driver.wait(async () => {\n    const el = await driver.findElement(totalAmountLocator);\n    const text = await el.getText();\n    return text.includes(data.expectedPrice);\n}, 10000, `Tổng tiền không cập nhật thành ${data.expectedPrice} sau 10s`);\nconst finalPriceEl = await driver.findElement(totalAmountLocator);\nconst finalPrice = await finalPriceEl.getText();\nexpect(finalPrice).to.include(data.expectedPrice);",
               "err": {},
               "uuid": "cd506515-757f-450a-8693-c4e072d11e5d",
               "parentUUID": "52a505e2-c0db-4d81-b2ca-22892223b7d7",
+=======
+              "context": "[\n  \"Tester: Đào Huỳnh Gia Hân - 81012302863\",\n  \"Start Time: 21:23:50 04/05/2026\",\n  \"Evidence: Screenshot after test execution.\",\n  \"screenshots/TC24_Cap_nhat_so_luong_hop_le_va_tong_tien_thay__oi__ung_1777904654151_PASS.png\",\n  \"End Time: 21:24:14 04/05/2026\"\n]",
+              "code": "await clearCart(driver);\nawait addProductToCart(driver, tc24Data.productUrl || tc24Data.url, LOCATORS);\nawait waitForCartStable(driver, LOCATORS);\n// Dùng locator fallback để tránh phụ thuộc vào XPath đầu tiên.\nconst { value: quantityBefore } = await findFirstDisplayedValue(driver, LOCATORS.quantityInputs, 10000);\nconst oldTotalText = await tryReadText(driver, LOCATORS.totalPrice);\nconst oldTotal = parseCurrency(oldTotalText);\nconst oldSummary = await getCartSummarySnapshot(driver);\nconst updatedInput = await updateQuantity(driver, LOCATORS, tc24Data.newQuantity);\nconst quantityAfter = updatedInput ? Number(await updatedInput.getAttribute('value')) || 0 : 0;\nawait driver.sleep(1800);\nconst newTotalText = await tryReadText(driver, LOCATORS.totalPrice);\nconst newTotal = parseCurrency(newTotalText);\nconst newSummary = await getCartSummarySnapshot(driver);\nvalidateTC24({\n  beforeQuantity: quantityBefore,\n  afterQuantity: quantityAfter,\n  expectedQuantity: tc24Data.newQuantity,\n  oldTotal,\n  newTotal,\n  oldSummaryText: oldSummary.summaryText,\n  newSummaryText: newSummary.summaryText\n});",
+              "err": {},
+              "uuid": "94877e12-d145-4753-bf71-bcc98481c229",
+              "parentUUID": "a142971e-bbca-4e02-8315-88fcafeaf689",
+>>>>>>> origin/GiaHan
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
+<<<<<<< HEAD
             "cd506515-757f-450a-8693-c4e072d11e5d"
+=======
+            "94877e12-d145-4753-bf71-bcc98481c229"
+>>>>>>> origin/GiaHan
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
+<<<<<<< HEAD
           "duration": 17339,
           "root": false,
           "rootEmpty": false,
@@ -132,11 +235,30 @@
               "fullTitle": "TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn \"before all\" hook in \"TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn\"",
               "timedOut": false,
               "duration": 684,
+=======
+          "duration": 23620,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 240000
+        },
+        {
+          "uuid": "b061a66d-574e-4235-aaef-14b018bb5761",
+          "title": "TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng",
+          "fullFile": "D:\\Projects\\SoftwareTesting\\Juno_Testing\\tests\\tc25.js",
+          "file": "\\tests\\tc25.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "fullTitle": "TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng \"before all\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 674,
+>>>>>>> origin/GiaHan
               "state": null,
               "speed": null,
               "pass": false,
               "fail": false,
               "pending": false,
+<<<<<<< HEAD
               "context": "[\n  \"Tester: LY HIEU VY\",\n  \"Start: 5/4/2026, 12:33:25 AM\",\n  \"This is evidence of the test case\"\n]",
               "code": "driver = await new Builder().forBrowser('chrome').build();\nstartTime = Date.now();\nmoreDetails(this, \"Tester: LY HIEU VY\");\nmoreDetails(this, `Start: ${new Date(startTime).toLocaleString()}`);\nmoreDetails(this, \"This is evidence of the test case\");\nawait driver.manage().window().maximize();",
               "err": {},
@@ -162,59 +284,144 @@
               "err": {},
               "uuid": "dcdbfb59-8fdb-4ce8-9b52-2ad8f5fdbadd",
               "parentUUID": "712e0c55-e11c-419a-9b39-c18861c03629",
+=======
+              "context": "[\n  \"Tester: Đào Huỳnh Gia Hân - 81012302863\",\n  \"Requirement: FR11\",\n  \"Expected: Sản phẩm được cập nhật số lượng bị loại bỏ hoàn toàn khỏi danh sách hiển thị trong giỏ hàng.\",\n  \"Product URL: https://sales.juno.vn/products/giay-sandal-quai-manh-that-nut\"\n]",
+              "code": "driver = await createChromeDriver();\naddTestMeta(this, `Tester: ${TESTER_NAME}`);\naddTestMeta(this, `Requirement: ${tc25Data.requirement}`);\naddTestMeta(this, `Expected: ${tc25Data.expected}`);\naddTestMeta(this, `Product URL: ${tc25Data.productUrl || tc25Data.url}`);",
+              "err": {},
+              "uuid": "bd2279ec-c563-45ac-8064-8fbb8f9f0be9",
+              "parentUUID": "b061a66d-574e-4235-aaef-14b018bb5761",
+>>>>>>> origin/GiaHan
               "isHook": true,
               "skipped": false
             },
             {
+<<<<<<< HEAD
               "title": "\"after each\" hook in \"TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn\"",
               "fullTitle": "TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn \"after each\" hook in \"TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn\"",
               "timedOut": false,
               "duration": 140,
+=======
+              "title": "\"before each\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "fullTitle": "TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng \"before each\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 1,
+>>>>>>> origin/GiaHan
               "state": null,
               "speed": null,
               "pass": false,
               "fail": false,
               "pending": false,
               "context": null,
+<<<<<<< HEAD
               "code": "await captureScreen(driver, this, this.currentTest.title, this.currentTest.state);",
               "err": {},
               "uuid": "737dc9e4-914f-43f9-8635-62f520e86d98",
               "parentUUID": "712e0c55-e11c-419a-9b39-c18861c03629",
+=======
+              "code": "addTestMeta(this, `Tester: ${TESTER_NAME}`);\naddTestMeta(this, `Start Time: ${formatReportTime(new Date())}`);\naddTestMeta(this, 'Evidence: Screenshot after test execution.');",
+              "err": {},
+              "uuid": "cebe4d72-dae6-449d-9f72-2c9428ec68a3",
+              "parentUUID": "b061a66d-574e-4235-aaef-14b018bb5761",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "fullTitle": "TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng \"after all\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 275,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "if (driver) {\n  try {\n    await withTimeout(driver.quit(), 20000, 'Timeout khi đóng trình duyệt TC25');\n  } catch (error) {\n    // Bỏ qua lỗi đóng browser để không treo toàn bộ run.\n  } finally {\n    removeTempChromeProfile(driver);\n  }\n}",
+              "err": {},
+              "uuid": "b721623c-0471-4067-ac29-ef7e27adcbd1",
+              "parentUUID": "b061a66d-574e-4235-aaef-14b018bb5761",
+              "isHook": true,
+              "skipped": false
+            },
+            {
+              "title": "\"after each\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "fullTitle": "TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng \"after each\" hook in \"TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng\"",
+              "timedOut": false,
+              "duration": 152,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "try {\n  await withTimeout(\n    captureScreen(driver, this, `${tc25Data.testcase}_${this.currentTest.title}`, this.currentTest.state),\n    20000,\n    'Timeout khi chụp screenshot TC25'\n  );\n} catch (error) {\n  // Không làm fail hook chỉ vì screenshot bị treo.\n}\naddTestMeta(this, `End Time: ${formatReportTime(new Date())}`);",
+              "err": {},
+              "uuid": "8870a843-1608-4b03-91e7-4a4d57ae7afc",
+              "parentUUID": "b061a66d-574e-4235-aaef-14b018bb5761",
+>>>>>>> origin/GiaHan
               "isHook": true,
               "skipped": false
             }
           ],
           "tests": [
             {
+<<<<<<< HEAD
               "title": "Nên hiển thị thông báo lỗi khi mua số lượng vượt quá tồn kho (13 cái)",
               "fullTitle": "TC23: Thêm số lượng sản phẩm vượt mức kho còn tồn Nên hiển thị thông báo lỗi khi mua số lượng vượt quá tồn kho (13 cái)",
               "timedOut": false,
               "duration": 19031,
+=======
+              "title": "Giảm số lượng về 0 thì sản phẩm bị xóa khỏi giỏ",
+              "fullTitle": "TC25: Không cho phép cập nhật số lượng bằng 0 trong giỏ hàng Giảm số lượng về 0 thì sản phẩm bị xóa khỏi giỏ",
+              "timedOut": false,
+              "duration": 77497,
+>>>>>>> origin/GiaHan
               "state": "passed",
               "speed": "slow",
               "pass": true,
               "fail": false,
               "pending": false,
+<<<<<<< HEAD
               "context": "\"screenshots/Nen_hien_thi_thong_bao_loi_khi_mua_so_luong_vuot_qua_ton_kho__13_cai__1777829624991_PASS.png\"",
               "code": "// 1. Vào web\nawait driver.get(data.url);\nawait driver.sleep(2000);\n// 2. Tìm kiếm sản phẩm\nconst searchInput = await driver.wait(until.elementLocated(By.xpath(locators.header.searchInput)), 10000);\nawait driver.wait(until.elementIsVisible(searchInput), 10000);\nawait searchInput.sendKeys(data.productName, Key.ENTER);\nawait driver.sleep(3000);\n// 3. Chọn sản phẩm đầu tiên\nconst firstProduct = await driver.wait(until.elementLocated(By.xpath(locators.searchPage.firstProductLink)), 10000);\nawait driver.wait(until.elementIsVisible(firstProduct), 10000);\nawait firstProduct.click();\nawait driver.sleep(3000);\n// 4. Bấm nút Mua\nconst buyBtn = await driver.wait(until.elementLocated(By.xpath(locators.detailPage.buyBtn)), 10000);\nawait driver.wait(until.elementIsVisible(buyBtn), 10000);\nawait buyBtn.click();\nawait driver.sleep(2000);\n// 5. Bấm vào nút Xem giỏ hàng\nconst viewCartBtn = await driver.wait(until.elementLocated(By.xpath(locators.miniCartDrawer.viewCartBtn)), 10000);\nawait driver.wait(until.elementIsVisible(viewCartBtn), 10000);\nawait viewCartBtn.click();\nawait driver.sleep(3000);\n// 6. Nhập số lượng vượt tồn kho và Enter\nconst qtyInputXpath = locators.cartPage.qtyInput(data.productName);\nconst qtyInput = await driver.wait(until.elementLocated(By.xpath(qtyInputXpath)), 10000);\nawait qtyInput.sendKeys(Key.CONTROL, 'a');\nawait qtyInput.sendKeys(Key.BACK_SPACE);\n// Gõ số và dập Enter thẳng tay luôn\nawait qtyInput.sendKeys(data.amountToEnter, Key.ENTER);\n// 7. Verify Notification xuất hiện\nconst toastLocator = By.xpath(`//div[@data-title and contains(., '${data.expectedNotification}')]`);\n// Chờ tối đa 10s cho đến khi thẻ thông báo xuất hiện\nconst toastElement = await driver.wait(until.elementLocated(toastLocator), 10000, `Không tìm thấy thông báo: ${data.expectedNotification}`);\nawait driver.wait(until.elementIsVisible(toastElement), 5000);\n// Dừng 1 chút để Mochawesome kịp chụp ảnh màn hình Toast hiện ra\nawait driver.sleep(1000);",
               "err": {},
               "uuid": "eccfdd04-1ef0-469f-b264-5b0f02ecdb2e",
               "parentUUID": "712e0c55-e11c-419a-9b39-c18861c03629",
+=======
+              "context": "[\n  \"Tester: Đào Huỳnh Gia Hân - 81012302863\",\n  \"Start Time: 21:24:15 04/05/2026\",\n  \"Evidence: Screenshot after test execution.\",\n  \"screenshots/TC25_Giam_so_luong_ve_0_thi_san_pham_bi_xoa_khoi_gio_1777904732709_PASS.png\",\n  \"End Time: 21:25:32 04/05/2026\"\n]",
+              "code": "await clearCart(driver);\nawait addProductToCart(driver, tc25Data.productUrl || tc25Data.url, LOCATORS);\nawait waitForCartStable(driver, LOCATORS);\nawait updateQuantity(driver, LOCATORS, tc25Data.newQuantity);\nawait driver.sleep(2000);\nconst itemCountAfterUpdate = await getDisplayedCount(driver, LOCATORS.cartItems);\nconst quantityInputsAfterUpdate = await getDisplayedCount(driver, LOCATORS.quantityInputs);\nconst emptyMessage = await tryReadText(driver, LOCATORS.cartEmptyMessage);\nvalidateTC25({\n  itemCountAfterUpdate,\n  quantityInputsAfterUpdate,\n  emptyMessage\n});",
+              "err": {},
+              "uuid": "a1b8fd0f-a4fc-4fa2-9726-d3beb00b84f3",
+              "parentUUID": "b061a66d-574e-4235-aaef-14b018bb5761",
+>>>>>>> origin/GiaHan
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
+<<<<<<< HEAD
             "eccfdd04-1ef0-469f-b264-5b0f02ecdb2e"
+=======
+            "a1b8fd0f-a4fc-4fa2-9726-d3beb00b84f3"
+>>>>>>> origin/GiaHan
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
+<<<<<<< HEAD
           "duration": 19031,
           "root": false,
           "rootEmpty": false,
           "_timeout": 0
+=======
+          "duration": 77497,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 240000
+>>>>>>> origin/GiaHan
         }
       ],
       "passes": [],
@@ -245,8 +452,12 @@
     },
     "marge": {
       "options": {
+<<<<<<< HEAD
         "charts": "true",
         "overwrite": "true"
+=======
+        "charts": "true"
+>>>>>>> origin/GiaHan
       },
       "version": "6.3.2"
     }
